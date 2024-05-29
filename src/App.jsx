@@ -2,16 +2,14 @@ import { useEffect, useState } from 'react';
 import './App.css'
 import { AddTodo } from './components/AddTodo';
 import { TodoList } from './components/TodoList';
+import { getSavedTodos } from './services/persistedTodos';
 
 function App() {
-
   const [todos, setTodos] = useState([])
 
   useEffect(() => {
-    const localTodos = localStorage.getItem('__stored__todos__')
-    if (localTodos) {
-      setTodos(JSON.parse(localTodos))
-    }
+    const actualTodos = getSavedTodos()
+    setTodos(actualTodos)
   }, [])
 
   const handleAddToDo = (title) => {

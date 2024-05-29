@@ -4,13 +4,14 @@ import userEvent from '@testing-library/user-event';
 import { act } from 'react';
 import { TodoTitle } from './components/TodoTitle';
 import { TodoList } from './components/TodoList';
+import { AddTodo } from './components/AddTodo';
 
 describe('App component', () => {
   // Mock localStorage
   const localStorageMock = {
     getItem: jest.fn(),
     setItem: jest.fn(),
-  };
+  }
 
   const testData = [
     {
@@ -66,39 +67,53 @@ describe('App component', () => {
   ]
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    global.localStorage = localStorageMock;
-  });
+    jest.clearAllMocks()
+    global.localStorage = localStorageMock
+  })
 
   test('renders App component', () => {
-    render(<App />);
-    const headerElement = screen.getByText(/My ToDo List/i);
-    expect(headerElement).toBeInTheDocument();
+    render(<App />)
+    const headerElement = screen.getByText(/My ToDo List/i)
+    expect(headerElement).toBeInTheDocument()
   });
 
   test('should render todos in list component', () => {
-    const { getAllByTestId } = render(<TodoList todos={testData} removeTodo={jest.fn()} toggleTodo={jest.fn()} editTitle={jest.fn()} />);
-    const todoList = getAllByTestId('todo-item');
-    expect(todoList.length).toBe(10);
+    const { getAllByTestId } = render(<TodoList todos={testData} removeTodo={jest.fn()} toggleTodo={jest.fn()} editTitle={jest.fn()} />)
+    const todoList = getAllByTestId('todo-item')
+    expect(todoList.length).toBe(10)
+  })
+
+  test('should add new todo', () => {
+    const handleAddToDo = jest.fn()
+
+    const { getByPlaceholderText } = render(<AddTodo saveTodo={handleAddToDo} />)
+    const inputElement = getByPlaceholderText('New TODO item')
+
+    act(() => {
+      userEvent.type(inputElement, 'New Todo{enter}')
+    })
+
+    expect(handleAddToDo).toHaveBeenCalledTimes(1);
+
   })
 
   test('should edit todo title', () => {
     const editTitle = jest.fn()
-    const { getByText, getByRole, getByDisplayValue } = render(<TodoTitle id={testData[0].id} title={testData[0].title} completed={testData[0].completed} editTitle={editTitle} />);
-    const todoItem = getByText('Luffy');
-    expect(todoItem).toBeInTheDocument();
+    const { getByText, getByRole, getByDisplayValue } = render(<TodoTitle id={testData[0].id} title={testData[0].title} completed={testData[0].completed} editTitle={editTitle} />)
+    const todoItem = getByText('Luffy')
+    expect(todoItem).toBeInTheDocument()
     
     const button = getByRole('edit-button')
 
     act(() => {
       fireEvent.click(button)
-    });
+    })
 
     const inputElement = getByDisplayValue(testData[0].title)
 
     act(() => {
-      userEvent.type(inputElement, 'New Todo{enter}')
-    });
+      userEvent.type(inputElement, 'Edit Todo{enter}')
+    })
     
     expect(editTitle).toHaveBeenCalledTimes(1)
   })

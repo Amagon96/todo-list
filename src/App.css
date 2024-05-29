@@ -1,6 +1,6 @@
 #root {
   max-width: 1280px;
-  min-width: 100vh;
+  min-width: 50%;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -43,6 +43,10 @@ header {
 .todo-title {
   width: 80%;
   text-align: start;
+}
+
+::placeholder {
+  color: #7965c6;
 }
 
 .todo-title-completed {
@@ -88,4 +92,17 @@ header {
   color: #A18AFF;
   border-style: none;
   font-size: 20px;
+}
+
+@media only screen and (max-width: 600px) { 
+  .todo-input {
+    border-radius: 9px;
+    font-size:20px;
+    width: 100%;
+    height: 60px;
+    border-style: none;
+    outline: none;
+    color: #A18AFF;
+    margin: 10px 0;
+  }
 }

@@ -7,6 +7,7 @@ Create a simple Todo List application using React. The application should allow 
 ● Remove items from the list.
 
 Requirements:
+
 1- Component Structure:
 App: The main component.
 ✅ TodoList: Displays the list of todos.
@@ -29,4 +30,4 @@ Instructions:
 3- Optional Enhancements:
 ✅ Add styling to make the application visually appealing.
 ✅ Add local storage to persist todos between page reloads
-Add unit tests for the components
+✅Add unit tests for the components
