@@ -5,3 +5,7 @@ export const getSavedTodos = () => {
   }
   return []
 }
+
+export const saveTodos = (newTodos) => {
+  localStorage.setItem('__stored__todos__', JSON.stringify(newTodos))
+}
